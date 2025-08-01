@@ -1,10 +1,10 @@
 use crate::history::{History, HistoryEntry};
 use crate::identity::{AccessResponse, IdentityStore, Outcome};
 use async_trait::async_trait;
+use rocket::State;
 use rocket::config::Config;
 use rocket::http::Status;
 use rocket::serde::json::Json;
-use rocket::State;
 use serde_derive::Deserialize;
 use std::error::Error;
 use std::time::SystemTime;

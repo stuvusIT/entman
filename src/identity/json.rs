@@ -50,7 +50,7 @@ impl IdentityStore for Json {
                         warn!("Failed to deserialize user at {}: {:?}", location, e);
                     }
                     Ok(user) => {
-                        if user.token == token && !is_expired(user.valid_time)  {
+                        if user.token == token && !is_expired(user.valid_time) {
                             return Ok(AccessResponse {
                                 outcome: if user.access {
                                     Outcome::Success
@@ -72,6 +72,6 @@ impl IdentityStore for Json {
     }
 }
 
-fn is_expired(expiry:DateTime<Utc>) -> bool {
+fn is_expired(expiry: DateTime<Utc>) -> bool {
     Utc::now() > expiry
 }
