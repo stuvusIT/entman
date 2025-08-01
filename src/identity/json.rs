@@ -5,6 +5,8 @@ use std::io::{BufRead, BufReader};
 use crate::identity::{AccessResponse, IdentityStore, Outcome};
 use serde_derive::Deserialize;
 
+use chrono::{DateTime, Utc};
+
 #[derive(Deserialize)]
 pub struct JsonIdentitySettings {
     pub filename: String,
@@ -15,6 +17,7 @@ struct User {
     username: String,
     token: String,
     access: bool,
+    valid_time: DateTime<Utc>,
 }
 
 pub struct Json {
@@ -47,7 +50,7 @@ impl IdentityStore for Json {
                         warn!("Failed to deserialize user at {}: {:?}", location, e);
                     }
                     Ok(user) => {
-                        if user.token == token {
+                        if user.token == token && !is_expired(user.valid_time)  {
                             return Ok(AccessResponse {
                                 outcome: if user.access {
                                     Outcome::Success
@@ -67,4 +70,8 @@ impl IdentityStore for Json {
             name: None,
         });
     }
+}
+
+fn is_expired(expiry:DateTime<Utc>) -> bool {
+    Utc::now() > expiry
 }
