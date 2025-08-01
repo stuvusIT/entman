@@ -1,7 +1,7 @@
 [package]
 name = "entman"
 version = "0.1.5"
-authors = ["haslersn <sebastian.hasler@gmx.net>", "rojost <romanjost@fius.de"]
+authors = ["haslersn <sebastian.hasler@gmx.net>"]
 edition = "2024"
 
 [dependencies]
