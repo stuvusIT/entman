@@ -1,23 +1,20 @@
 [package]
 name = "entman"
-version = "0.1.0"
-authors = ["haslersn <sebastian.hasler@gmx.net>"]
-edition = "2018"
+version = "0.1.5"
+authors = ["haslersn <sebastian.hasler@gmx.net>", "rojost <romanjost@fius.de"]
+edition = "2024"
 
 [dependencies]
 async-trait = "0.1"
-env_logger = "0.9"
-ldap3 = "0.10"
+datetime = "0.5.2"
+env_logger = "0.11"
+ldap3 = "0.11"
 log = "0.4"
-reqwest = "0.11"
-rocket = { version = "0.5.0-rc.1", features = ["json"] }
+reqwest = "0.12"
+rocket = { version = "0.5", features = ["json"] }
 serde = "1.0"
 serde_derive = "1.0"
 serde_json = "1.0"
-toml = "0.5"
-tokio = { version = "1.17.0" }
+toml = "0.9"
+tokio = { version = "1.46" }
 
-[dependencies.rocket_contrib]
-version = "0.4"
-default-features = false
-features = ["json"]
