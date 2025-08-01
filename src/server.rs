@@ -88,7 +88,7 @@ pub async fn access(
             response: response.clone(),
         })
         .map_err(|e| (Status::ServiceUnavailable, e.to_string()))?;
-    drop(context);
+    let _ = context;
     let status = if response.outcome == Outcome::Success {
         callback
             .inner()
