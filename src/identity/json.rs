@@ -16,8 +16,8 @@ pub struct JsonIdentitySettings {
 struct User {
     username: String,
     token: String,
-    access: bool,
-    valid_time: DateTime<Utc>,
+    valid_from: DateTime<Utc>,
+    valid_until: DateTime<Utc>,
 }
 
 pub struct Json {
@@ -50,13 +50,9 @@ impl IdentityStore for Json {
                         warn!("Failed to deserialize user at {}: {:?}", location, e);
                     }
                     Ok(user) => {
-                        if user.token == token && !is_expired(user.valid_time) {
+                        if user.token == token && !is_valid(user.valid_from, user.valid_until) {
                             return Ok(AccessResponse {
-                                outcome: if user.access {
-                                    Outcome::Success
-                                } else {
-                                    Outcome::Revoked
-                                },
+                                outcome: Outcome::Success,
                                 name: Some(user.username),
                             });
                         }
@@ -72,6 +68,6 @@ impl IdentityStore for Json {
     }
 }
 
-fn is_expired(expiry: DateTime<Utc>) -> bool {
-    Utc::now() > expiry
+fn is_valid(from: DateTime<Utc> ,until: DateTime<Utc>) -> bool {
+    from < Utc::now() && Utc::now()  > until
 }
